@@ -1,0 +1,48 @@
+Files to turn in : ft_strlcpy.c
+Allowed functions : None
+
+• Reproduce the behavior of the function strlcpy (man strlcpy).
+• Here’s how it should be prototyped :
+unsigned int ft_strlcpy(char *dest, char *src, unsigned int size);
+
+Certainly! Here's an implementation of the `ft_strlcpy` function that reproduces the behavior of the `strlcpy` function:
+
+```c
+unsigned int ft_strlcpy(char *dest, char *src, unsigned int size)
+{
+    unsigned int src_len = 0;
+    unsigned int i = 0;
+
+    // Calculate the length of the source string
+    while (src[src_len] != '\0')
+        src_len++;
+
+    // Copy characters from source to destination until size allows or until the end of source is reached
+    while (i < (size - 1) && src[i] != '\0')
+    {
+        dest[i] = src[i];
+        i++;
+    }
+
+    // Null-terminate the destination string
+    if (size > 0)
+        dest[i] = '\0';
+
+    // Return the length of the source string
+    return src_len;
+}
+```
+
+In this implementation, the `ft_strlcpy` function takes three parameters: `dest` (pointer to the destination string), `src` (pointer to the source string), and `size` (the size of the destination buffer).
+
+The function first calculates the length of the source string (`src_len`) by iterating through the characters of `src` until it reaches the null terminator.
+
+Then, it copies characters from the source string to the destination string until one of the following conditions is met:
+- `size - 1` characters have been copied (to leave space for the null terminator)
+- The end of the source string is reached (`src[i]` is null terminator)
+
+After copying the characters, the function null-terminates the destination string by assigning `'\0'` to the `dest[i]` position, as long as `size` is greater than 0.
+
+Finally, the function returns the length of the source string (`src_len`), which represents the number of characters that would have been copied if there were no size constraint.
+
+Please note that this implementation assumes that the input strings are null-terminated.
