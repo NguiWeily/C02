@@ -1,0 +1,64 @@
+Files to turn in : ft_strcapitalize.c
+Allowed functions : None
+
+• Create a function that capitalizes the first letter of each word and transforms all
+other letters to lowercase.
+• A word is a string of alphanumeric characters.
+• Here’s how it should be prototyped :
+char *ft_strcapitalize(char *str);
+
+• It should return str.
+• For example:
+salut, comment tu vas ? 42mots quarante-deux; cinquante+et+un
+
+• Becomes:
+
+Salut, Comment Tu Vas ? 42mots Quarante-Deux; Cinquante+Et+Un
+
+Certainly! Here's an implementation of the `ft_strcapitalize` function that capitalizes the first letter of each word and transforms all other letters to lowercase:
+
+```c
+char *ft_strcapitalize(char *str)
+{
+    int capitalize_next = 1;  // Flag to indicate if the next character should be capitalized
+
+    while (*str)
+    {
+        if ((*str >= 'a' && *str <= 'z') || (*str >= 'A' && *str <= 'Z'))
+        {
+            if (capitalize_next)
+            {
+                if (*str >= 'a' && *str <= 'z')
+                    *str = *str - 32;  // Convert to uppercase
+                capitalize_next = 0;
+            }
+            else
+            {
+                if (*str >= 'A' && *str <= 'Z')
+                    *str = *str + 32;  // Convert to lowercase
+            }
+        }
+        else
+        {
+            capitalize_next = 1;  // Next character is a new word, capitalize it
+        }
+
+        str++;
+    }
+
+    return str;
+}
+```
+
+In this implementation, the `ft_strcapitalize` function takes a parameter `str`, which is a pointer to the string to be capitalized.
+
+The function uses a while loop to iterate through each character in the string. It checks if the character is an alphanumeric character by comparing it with the ASCII values of 'a' to 'z' and 'A' to 'Z'. If it is an alphanumeric character, the function performs the following operations:
+
+1. If `capitalize_next` is set to 1, indicating that the next character should be capitalized, it checks if the current character is a lowercase letter. If it is, it converts it to uppercase by subtracting 32 from its ASCII value.
+2. If `capitalize_next` is set to 0, indicating that the next character should be in lowercase, it checks if the current character is an uppercase letter. If it is, it converts it to lowercase by adding 32 to its ASCII value.
+
+The function also checks if the current character is a non-alphanumeric character. If it is, it sets `capitalize_next` to 1, indicating that the next character is the start of a new word and should be capitalized.
+
+Finally, the function returns the modified string `str`.
+
+Please note that this implementation assumes that the input string is null-terminated.
