@@ -1,0 +1,36 @@
+Files to turn in : ft_strupcase.c
+Allowed functions : None
+
+• Create a function that transforms every letter to uppercase.
+• Here’s how it should be prototyped :
+char *ft_strupcase(char *str);
+
+• It should return str.
+
+Certainly! Here's an implementation of the `ft_strupcase` function that transforms every letter in a string to uppercase:
+
+```c
+char *ft_strupcase(char *str)
+{
+    char *ptr = str;
+
+    while (*ptr)
+    {
+        if (*ptr >= 'a' && *ptr <= 'z')
+            *ptr = *ptr - 32;  // Convert lowercase to uppercase
+        ptr++;
+    }
+
+    return str;
+}
+```
+
+In this implementation, the `ft_strupcase` function takes a parameter `str`, which is a pointer to the string to be converted to uppercase.
+
+The function uses a while loop to iterate through each character in the string. It checks if the character is a lowercase letter by comparing it with the ASCII values of 'a' to 'z'. If a lowercase letter is found, it converts it to uppercase by subtracting 32 from its ASCII value, which is the difference between the lowercase and uppercase letters in the ASCII table.
+
+After converting the character to uppercase, the function moves to the next character in the string.
+
+Finally, the function returns the modified string `str`.
+
+Please note that this implementation assumes that the input string is null-terminated.
