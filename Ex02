@@ -1,0 +1,38 @@
+Files to turn in : ft_str_is_alpha.c
+Allowed functions : None
+
+• Create a function that returns 1 if the string given as a parameter contains only
+alphabetical characters, and 0 if it contains any other character.
+• Here’s how it should be prototyped :
+int ft_str_is_alpha(char *str);
+
+• It should return 1 if str is empty.
+
+Certainly! Here's an implementation of the `ft_str_is_alpha` function that checks if a string contains only alphabetical characters:
+
+```c
+int ft_str_is_alpha(char *str)
+{
+    if (*str == '\0')
+        return 1;  // Empty string is considered alphabetical
+
+    while (*str)
+    {
+        if ((*str < 'A' || *str > 'Z') && (*str < 'a' || *str > 'z'))
+            return 0;  // Non-alphabetical character found
+        str++;
+    }
+
+    return 1;  // All characters are alphabetical
+}
+```
+
+In this implementation, the `ft_str_is_alpha` function takes a parameter `str`, which is a pointer to the string to be checked. 
+
+The function first checks if the string is empty by comparing the first character `*str` with the null terminator `'\0'`. If it is empty, the function immediately returns 1, indicating that the string is considered alphabetical.
+
+If the string is not empty, the function iterates through each character of the string using a while loop. It checks if the character is not an uppercase or lowercase alphabetical character by comparing it with the ASCII values of 'A' to 'Z' and 'a' to 'z'. If a non-alphabetical character is found, the function returns 0, indicating that the string contains a non-alphabetical character.
+
+If the function completes the loop without encountering any non-alphabetical characters, it returns 1, indicating that the string contains only alphabetical characters.
+
+Please note that this implementation assumes that the input string is null-terminated.
