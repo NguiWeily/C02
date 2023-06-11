@@ -1,0 +1,38 @@
+Files to turn in : ft_str_is_printable.c
+Allowed functions : None
+
+• Create a function that returns 1 if the string given as a parameter contains only
+printable characters, and 0 if it contains any other character.
+• Here’s how it should be prototyped :
+int ft_str_is_printable(char *str);
+
+• It should return 1 if str is empty.
+
+Certainly! Here's an implementation of the `ft_str_is_printable` function that checks if a string contains only printable characters:
+
+```c
+int ft_str_is_printable(char *str)
+{
+    if (*str == '\0')
+        return 1;  // Empty string is considered printable
+
+    while (*str)
+    {
+        if (*str < 32 || *str > 126)
+            return 0;  // Non-printable character found
+        str++;
+    }
+
+    return 1;  // All characters are printable
+}
+```
+
+In this implementation, the `ft_str_is_printable` function takes a parameter `str`, which is a pointer to the string to be checked.
+
+The function first checks if the string is empty by comparing the first character `*str` with the null terminator `'\0'`. If it is empty, the function immediately returns 1, indicating that the string is considered printable.
+
+If the string is not empty, the function iterates through each character of the string using a while loop. It checks if the character is not a printable character by comparing it with the ASCII values of 32 (space) to 126 (tilde). If a non-printable character is found, the function returns 0, indicating that the string contains a non-printable character.
+
+If the function completes the loop without encountering any non-printable characters, it returns 1, indicating that the string contains only printable characters.
+
+Please note that this implementation assumes that the input string is null-terminated.
