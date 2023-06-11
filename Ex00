@@ -1,0 +1,32 @@
+Files to turn in : ft_strcpy.c
+Allowed functions : None
+
+• Reproduce the behavior of the function strcpy (man strcpy).
+• Here’s how it should be prototyped :
+char *ft_strcpy(char *dest, char *src);
+
+Certainly! Here's an implementation of the `ft_strcpy` function that reproduces the behavior of the `strcpy` function:
+
+```c
+char *ft_strcpy(char *dest, char *src)
+{
+    char *dest_start = dest;
+    
+    while (*src)
+    {
+        *dest = *src;
+        dest++;
+        src++;
+    }
+    
+    *dest = '\0';  // Add null terminator at the end
+    
+    return dest_start;
+}
+```
+
+In this implementation, the `ft_strcpy` function takes two parameters: `dest`, which is a pointer to the destination string, and `src`, which is a pointer to the source string. It copies the characters from the source string to the destination string until it encounters a null character (`'\0'`), indicating the end of the source string. After copying all the characters, it adds a null terminator at the end of the destination string.
+
+Finally, it returns a pointer to the beginning of the destination string (`dest_start`).
+
+Please note that this implementation assumes that the destination string `dest` has enough space to accommodate the characters from the source string `src`.
