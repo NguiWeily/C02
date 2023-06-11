@@ -1,0 +1,36 @@
+Files to turn in : ft_strlowcase.c
+Allowed functions : None
+
+• Create a function that transforms every letter to lowercase.
+• Here’s how it should be prototyped :
+char *ft_strlowcase(char *str);
+
+• It should return str.
+
+Certainly! Here's an implementation of the `ft_strlowcase` function that transforms every letter in a string to lowercase:
+
+```c
+char *ft_strlowcase(char *str)
+{
+    char *ptr = str;
+
+    while (*ptr)
+    {
+        if (*ptr >= 'A' && *ptr <= 'Z')
+            *ptr = *ptr + 32;  // Convert uppercase to lowercase
+        ptr++;
+    }
+
+    return str;
+}
+```
+
+In this implementation, the `ft_strlowcase` function takes a parameter `str`, which is a pointer to the string to be converted to lowercase.
+
+The function uses a while loop to iterate through each character in the string. It checks if the character is an uppercase letter by comparing it with the ASCII values of 'A' to 'Z'. If an uppercase letter is found, it converts it to lowercase by adding 32 to its ASCII value, which is the difference between the uppercase and lowercase letters in the ASCII table.
+
+After converting the character to lowercase, the function moves to the next character in the string.
+
+Finally, the function returns the modified string `str`.
+
+Please note that this implementation assumes that the input string is null-terminated.
