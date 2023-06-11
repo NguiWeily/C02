@@ -1,0 +1,40 @@
+Files to turn in : ft_strncpy.c
+Allowed functions : None
+
+• Reproduce the behavior of the function strncpy (man strncpy).
+• Here’s how it should be prototyped :
+char *ft_strncpy(char *dest, char *src, unsigned int n);
+
+Certainly! Here's an implementation of the `ft_strncpy` function that reproduces the behavior of the `strncpy` function:
+
+```c
+char *ft_strncpy(char *dest, char *src, unsigned int n)
+{
+    char *dest_start = dest;
+
+    while (*src && n > 0)
+    {
+        *dest = *src;
+        dest++;
+        src++;
+        n--;
+    }
+
+    while (n > 0)
+    {
+        *dest = '\0';  // Pad remaining characters with null terminator
+        dest++;
+        n--;
+    }
+
+    return dest_start;
+}
+```
+
+In this implementation, the `ft_strncpy` function takes three parameters: `dest`, which is a pointer to the destination string, `src`, which is a pointer to the source string, and `n`, which specifies the maximum number of characters to be copied from `src` to `dest`.
+
+The function starts by copying characters from the source string to the destination string until it encounters a null character (`'\0'`) in the source string or until `n` reaches 0. After copying `n` characters or reaching the end of the source string, the function pads the remaining characters in the destination string with null terminators until `n` becomes 0.
+
+Finally, it returns a pointer to the beginning of the destination string (`dest_start`).
+
+Please note that if the length of the source string is less than `n`, the remaining characters in the destination string will be padded with null terminators to reach `n` characters.
