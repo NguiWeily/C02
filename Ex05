@@ -1,38 +1,63 @@
+Chapter VIII
+Exercise 05 : ft_str_is_uppercase
+Exercise 05
+ft_str_is_uppercase
+Turn-in directory : ex05/
 Files to turn in : ft_str_is_uppercase.c
 Allowed functions : None
-
 • Create a function that returns 1 if the string given as a parameter contains only
 uppercase alphabetical characters, and 0 if it contains any other character.
 • Here’s how it should be prototyped :
-int ft_str_is_uppercase(char *str);
+int
+ft_str_is_uppercase(char *str);
+• It should return 1 if str is empty. and create main test code and comply norminette and don't use "for" and function as short as possible
 
-• It should return 1 if str is empty.
-
-Certainly! Here's an implementation of the `ft_str_is_uppercase` function that checks if a string contains only uppercase alphabetical characters:
+Certainly! Here's a possible solution for the `ft_str_is_uppercase` function:
 
 ```c
 int ft_str_is_uppercase(char *str)
 {
-    if (*str == '\0')
-        return 1;  // Empty string is considered uppercase
-
-    while (*str)
+    int i = 0;
+    
+    while (str[i] != '\0')
     {
-        if (*str < 'A' || *str > 'Z')
-            return 0;  // Non-uppercase character found
-        str++;
+        if (!(str[i] >= 'A' && str[i] <= 'Z'))
+            return 0;
+        i++;
     }
-
-    return 1;  // All characters are uppercase
+    
+    return 1;
 }
 ```
 
-In this implementation, the `ft_str_is_uppercase` function takes a parameter `str`, which is a pointer to the string to be checked.
+Explanation:
+1. We initialize the index `i` to 0.
+2. We iterate over the characters of the string using a `while` loop until we reach the null terminator `'\0'`.
+3. Inside the loop, we check if the current character `str[i]` is not within the range of uppercase alphabetical characters (from 'A' to 'Z'). If it's not, we return 0 immediately, indicating that the string contains a non-uppercase character.
+4. If we reach the end of the string without encountering any non-uppercase character, we return 1 to indicate that the string contains only uppercase characters.
+5. If the string is empty (i.e., the first character is the null terminator), the loop is not executed, and we return 1 to comply with the requirement.
 
-The function first checks if the string is empty by comparing the first character `*str` with the null terminator `'\0'`. If it is empty, the function immediately returns 1, indicating that the string is considered uppercase.
+Here's an example of a main function to test the `ft_str_is_uppercase` function:
 
-If the string is not empty, the function iterates through each character of the string using a while loop. It checks if the character is not an uppercase alphabetical character by comparing it with the ASCII values of 'A' to 'Z'. If a non-uppercase character is found, the function returns 0, indicating that the string contains a non-uppercase character.
+```c
+#include <stdio.h>
 
-If the function completes the loop without encountering any non-uppercase characters, it returns 1, indicating that the string contains only uppercase alphabetical characters.
+int ft_str_is_uppercase(char *str);
 
-Please note that this implementation assumes that the input string is null-terminated.
+int main(void)
+{
+    char str1[] = "HELLO";
+    char str2[] = "Hello";
+    char str3[] = "123";
+    char str4[] = "";
+    
+    printf("%d\n", ft_str_is_uppercase(str1)); // Output: 1
+    printf("%d\n", ft_str_is_uppercase(str2)); // Output: 0
+    printf("%d\n", ft_str_is_uppercase(str3)); // Output: 0
+    printf("%d\n", ft_str_is_uppercase(str4)); // Output: 1
+    
+    return 0;
+}
+```
+
+Compile and run this code, and you should see the expected output for each test case.
