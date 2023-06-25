@@ -1,60 +1,54 @@
+Chapter XIV
+Exercise 11 :
+ft_putstr_non_printable
+Exercise 11
+ft_putstr_with_non_printable
+Turn-in directory : ex11/
 Files to turn in : ft_putstr_non_printable.c
 Allowed functions : write
-
 • Create a function that displays a string of characters onscreen. If this string con-
 tains characters that aren’t printable, they’ll have to be displayed in the shape of
-
 hexadecimals (lowercase), preceeded by a "backslash".
 • For example :
 Coucou\ntu vas bien ?
-
 • The function should display :
 Coucou\0atu vas bien ?
-
 • Here’s how it should be prototyped :
-void ft_putstr_non_printable(char *str);
+void
+ft_putstr_non_printable(char *str); and create main test code and comply norminette and don't use "for" and function as short as possible
 
-Certainly! Here's an implementation of the `ft_putstr_non_printable` function that displays a string of characters onscreen, replacing any non-printable characters with their hexadecimal representation:
-
-```c
 #include <unistd.h>
 
 void ft_putchar(char c)
 {
-    write(1, &c, 1);
+	write(1, &c, 1);
 }
 
 void ft_putstr_non_printable(char *str)
 {
-    unsigned char ch;
-    char hex[16] = "0123456789abcdef";
+	int i = 0;
 
-    while (*str)
-    {
-        ch = (unsigned char)*str;
-
-        if (ch >= 32 && ch <= 126)
-        {
-            ft_putchar(ch);
-        }
-        else
-        {
-            ft_putchar('\\');
-            ft_putchar(hex[ch / 16]);
-            ft_putchar(hex[ch % 16]);
-        }
-
-        str++;
-    }
+	while (str[i] != '\0')
+	{
+		if (str[i] < ' ' || str[i] > '~')
+		{
+			ft_putchar('\\');
+			ft_putchar("0123456789abcdef"[str[i] / 16]);
+			ft_putchar("0123456789abcdef"[str[i] % 16]);
+		}
+		else
+		{
+			ft_putchar(str[i]);
+		}
+		i++;
+	}
 }
-```
 
-In this implementation, the `ft_putstr_non_printable` function takes a parameter `str`, which is a pointer to the string to be displayed.
+int main()
+{
+	char str[] = "Coucou\ntu vas bien ?";
 
-The function uses a while loop to iterate through each character in the string. It first checks if the character is a printable character by comparing its ASCII value with the range of printable characters (from 32 to 126). If it is printable, the character is directly displayed using the `ft_putchar` function.
+	ft_putstr_non_printable(str);
 
-If the character is not printable, it is replaced by its hexadecimal representation. The function first displays a backslash `'\\'`, then it uses the `hex` array to convert the high and low nibbles of the character to hexadecimal digits. The high nibble is obtained by dividing the character by 16, and the low nibble is obtained by taking the remainder after division by 16. These hexadecimal digits are then displayed using the `ft_putchar` function.
-
-The `ft_putchar` function is a helper function that writes a single character to the standard output. It uses the `write` function from the `<unistd.h>` library to achieve this.
-
-Please note that this implementation assumes that the input string is null-terminated.
+	return 0;
+}
