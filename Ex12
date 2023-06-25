@@ -1,122 +1,146 @@
+Chapter XV
+Exercise 12 : ft_print_memory
+Exercise 12
+ft_print_memory
+Turn-in directory : ex12/
 Files to turn in : ft_print_memory.c
 Allowed functions : write
-
 • Create a function that displays the memory area onscreen.
 • The display of this memory area should be split into three "columns" separated by
-a space :
+a space:
 ◦ The hexadecimal address of the first line’s first character followed by a ’:’.
 ◦ The content in hexadecimal with a space each 2 characters and should be
 padded with spaces if needed (see the example below).
 ◦ The content in printable characters.
 • If a character is non-printable, it’ll be replaced by a dot.
 • Each line should handle sixteen characters.
-• If size equals to 0, nothing should be displayed.
-• Example:
+• If size is equal to 0, nothing should be displayed.
+Example:
 $> ./ft_print_memory
 000000010a161f40: 426f 6e6a 6f75 7220 6c65 7320 616d 696e Bonjour les amin
-000000010a161f50: 6368 6573 090a 0963 2020 6573 7420 666f ches...c est fo
+000000010a161f50: 6368 6573 090a 0963 0720 6573 7420 666f ches...c. est fo
 000000010a161f60: 7509 746f 7574 0963 6520 7175 206f 6e20 u.tout.ce qu on
 000000010a161f70: 7065 7574 2066 6169 7265 2061 7665 6309 peut faire avec.
 000000010a161f80: 0a09 7072 696e 745f 6d65 6d6f 7279 0a0a ..print_memory..
-000000010a161f90: 0a09 6c6f 6c2e 6c6f 6c0a 2000 ..lol.lol. .
+000000010a161f90: 0a09 6c6f 6c2e 6c6f 6c0a 2000
+..lol.lol. .
 $> ./ft_print_memory | cat -te
 0000000107ff9f40: 426f 6e6a 6f75 7220 6c65 7320 616d 696e Bonjour les amin$
-0000000107ff9f50: 6368 6573 090a 0963 2020 6573 7420 666f ches...c est fo$
+0000000107ff9f50: 6368 6573 090a 0963 0720 6573 7420 666f ches...c. est fo$
 0000000107ff9f60: 7509 746f 7574 0963 6520 7175 206f 6e20 u.tout.ce qu on $
 0000000107ff9f70: 7065 7574 2066 6169 7265 2061 7665 6309 peut faire avec.$
 0000000107ff9f80: 0a09 7072 696e 745f 6d65 6d6f 7279 0a0a ..print_memory..$
-0000000107ff9f90: 0a09 6c6f 6c2e 6c6f 6c0a 2000 ..lol.lol. .$
+0000000107ff9f90: 0a09 6c6f 6c2e 6c6f 6c0a 2000
+..lol.lol. .$
 $>
-• Here’s how it should be prototyped :
-void *ft_print_memory(void *addr, unsigned int size);
-
+• Here’s how it should be prototyped:
+void
+*ft_print_memory(void *addr, unsigned int size);
 • It should return addr.
-
-Certainly! Here's an implementation of the `ft_print_memory` function that displays the memory area onscreen according to the specified format:
+and create main test code and comply norminette and don't use "for" and function as short as possible
+To comply with the norminette and avoid using a `for` loop, you can use a `while` loop instead. Here's the implementation of the `ft_print_memory` function along with the main test code:
 
 ```c
 #include <unistd.h>
 
 void ft_putchar(char c)
 {
-    write(1, &c, 1);
+	write(1, &c, 1);
 }
 
-void ft_put_hex(unsigned char c)
+void ft_putaddr(void *addr)
 {
-    char hex_digits[] = "0123456789abcdef";
-    ft_putchar(hex_digits[c / 16]);
-    ft_putchar(hex_digits[c % 16]);
+	unsigned long long int address = (unsigned long long int)addr;
+	char base[] = "0123456789abcdef";
+	char result[16];
+	int i = 15;
+
+	while (address > 0 && i >= 0)
+	{
+		result[i] = base[address % 16];
+		address /= 16;
+		i--;
+	}
+
+	while (i >= 0)
+	{
+		result[i] = '0';
+		i--;
+	}
+
+	write(1, "00000000", 8);
+	write(1, result, 16);
+	write(1, ": ", 2);
 }
 
-void ft_print_content(unsigned char *addr, unsigned int size)
+void ft_puthex(unsigned char c)
 {
-    unsigned int i;
+	char base[] = "0123456789abcdef";
 
-    i = 0;
-    while (i < size)
-    {
-        ft_put_hex(addr[i]);
-        if (i % 2)
-            ft_putchar(' ');
-        i++;
-    }
-    while (i < 16)
-    {
-        ft_putchar(' ');
-        ft_putchar(' ');
-        if (i % 2)
-            ft_putchar(' ');
-        i++;
-    }
+	ft_putchar(base[c / 16]);
+	ft_putchar(base[c % 16]);
 }
 
-void ft_print_printable(unsigned char *addr, unsigned int size)
+void ft_putprint(unsigned char c)
 {
-    unsigned int i;
-
-    i = 0;
-    while (i < size)
-    {
-        if (addr[i] >= 32 && addr[i] <= 126)
-            ft_putchar(addr[i]);
-        else
-            ft_putchar('.');
-        i++;
-    }
+	if (c >= 32 && c <= 126)
+		ft_putchar(c);
+	else
+		ft_putchar('.');
 }
 
 void *ft_print_memory(void *addr, unsigned int size)
 {
-    unsigned char *ptr = (unsigned char *)addr;
-    unsigned int i;
+	unsigned int i = 0;
+	unsigned char *ptr = (unsigned char *)addr;
 
-    i = 0;
-    while (i < size)
-    {
-        ft_put_hex((unsigned long long)ptr);
-        ft_putchar(':');
-        ft_putchar(' ');
-        ft_print_content(ptr, size - i);
-        ft_putchar(' ');
-        ft_print_printable(ptr, size - i);
-        ft_putchar('\n');
-        ptr += 16;
-        i += 16;
-    }
+	while (i < size)
+	{
+		ft_putaddr(addr + i);
+		unsigned int j = 0;
 
-    return addr;
+		while (j < 16 && j + i < size)
+		{
+			ft_puthex(ptr[i + j]);
+			if (j % 2 == 1)
+				ft_putchar(' ');
+			j++;
+		}
+
+		while (j < 16)
+		{
+			write(1, "  ", 2);
+			if (j % 2 == 1)
+				ft_putchar(' ');
+			j++;
+		}
+
+		j = 0;
+		while (j < 16 && j + i < size)
+		{
+			ft_putprint(ptr[i + j]);
+			j++;
+		}
+
+		ft_putchar('\n');
+		i += 16;
+	}
+
+	return addr;
+}
+
+int main()
+{
+	char str[] = "Bonjour les amis\nches\n\t.c'est fou\ntout ce qu'on peut faire avec.\n\tprint_memory\n\t\tlol.lol.";
+
+	ft_print_memory(str, sizeof(str) - 1);
+
+	return 0;
 }
 ```
 
-In this implementation, the `ft_print_memory` function takes two parameters: `addr`, which is a pointer to the memory area to be displayed, and `size`, which is the size of the memory area.
+In this implementation, the `ft_print_memory` function takes a memory address (`addr`) and a size (`size`) as input. It iterates over the memory area using a `while` loop, printing the address, hexadecimal content, and printable characters. The `ft_putaddr` function is used to print the hexadecimal address, the `ft_puthex` function prints the hexadecimal content, and the `ft_putprint` function prints the printable characters or dots if the character is non-printable.
 
-The function uses the `ft_put_hex` function to display the hexadecimal representation of each byte in the memory area. It divides the byte by 16 to obtain the high nibble and uses the remainder of the division to obtain the low nibble. It then uses the `ft_putchar` function to display the corresponding hexadecimal digits.
+The main test code demonstrates how to use the `ft_print_memory` function by passing a test string and printing the memory area in the desired format.
 
-The `ft_print_content` function is responsible for displaying the content of the memory area in hexadecimal format. It iterates through each byte in the memory area and calls `ft_put_hex` to display the hexadecimal value. It inserts a space every two characters.
-
-The `ft_print_printable` function displays the content of the memory area in printable characters. It checks if each byte falls within the range of printable characters (from ASCII 32 to 126). If it does, it uses `ft_putchar` to display the character. If the byte is not printable, it displays a dot (`'.'`).
-
-Finally, the `ft_print_memory` function uses a while loop to iterate through the memory area. It calls `ft_put_hex` to display the hexadecimal address of the first character of each line, followed by a colon (`':'`). It then calls `ft_putchar` to display a space, followed by the content in hexadecimal format using `ft_print_content`. After that, it displays a space and calls `ft_print_printable` to display the content in printable characters. It ends each line with a newline character (`'\n'`).
-
-Please note that the memory area is treated as an array of bytes (`unsigned char *`) in this implementation. Additionally, the `ft_putchar` function and the `ft_put_hex` function are helper
+Please make sure to include the necessary headers and adjust the test case as needed.
