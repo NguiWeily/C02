@@ -25,31 +25,46 @@ and create main test code and comply norminette and don't use "for" and function
 /*   By: wngui <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 20:20:09 by wngui             #+#    #+#             */
-/*   Updated: 2023/06/25 21:10:32 by wngui            ###   ########.fr       */
+/*   Updated: 2023/06/25 21:32:06 by wngui            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-char    *ft_strcapitalize(char *str)
+char	*ft_strlowcase(char *str)
 {
-        int     i;
-        int     n;
-        char    c;
+	int	i;
 
-        i = 0;
-        n = 1;
-        while (*(str + i) != '\0')
-        {
-                c = *(str + i);
-                if (n == 1 && c >= 'a' && c <= 'z')
-                        str[i] -= 32;
-                else if (n == 0 && c >= 'A' && c <= 'Z')
-                        str[i] += 32;
-                if (c < '0' || (c > '9' && c < 'A') || (c > 'Z' && c < 'a') || c > 122)
-                        n = 1;
-                else
-                        n = 0;
-                i++;
-        }
-        return (str);
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] >= 'A' && str[i] <= 'Z')
+			str[i] += 32;
+		i++;
+	}
+	return (str);
+}
+
+char	*ft_strcapitalize(char *str)
+{
+	int	i;
+	int	change;
+
+	i = 0;
+	change = 1;
+	ft_strlowcase(str);
+	while (str[i] != '\0')
+	{
+		if (str[i] >= 'a' && str[i] <= 'z')
+		{
+			if (change == 1)
+				str[i] -= 32;
+			change = 0;
+		}
+		else if (str[i] >= '0' && str[i] <= '9')
+			change = 0;
+		else
+			change = 1;
+		i++;
+	}
+	return (str);
 }
 /*
 #include <stdio.h>
